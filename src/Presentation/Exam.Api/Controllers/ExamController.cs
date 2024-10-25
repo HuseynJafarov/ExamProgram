@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Features.Commands.Exam;
+using Application.Features.Queries.Exam;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Exam.Api.Controllers
 {
@@ -6,10 +9,48 @@ namespace Exam.Api.Controllers
     [ApiController]
     public class ExamController : ControllerBase
     {
-        [HttpPost]
-        public async Task<IActionResult> CreateExam()
+        private readonly IMediator _mediator;
+
+        public ExamController(IMediator mediator)
         {
-            return Ok();
+            _mediator = mediator;
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateExam(CreateExamCommand command)
+        {
+             var result = await _mediator.Send(command);
+             return Ok(result);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateExam(UpdateExamCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> RemoveExam(RemoveExamCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetByIdExam(GetByIdExamQuery query)
+        {
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllExams(GetAllExamQuery query)
+        {
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+
     }
 }

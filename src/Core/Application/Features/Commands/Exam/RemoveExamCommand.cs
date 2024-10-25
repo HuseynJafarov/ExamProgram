@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using Application.Helpers.Result;
+using MediatR;
 
 namespace Application.Features.Commands.Exam
 {
-    public record RemoveExamCommand : IRequest
+    public record RemoveExamCommand : IRequest<ServiceResult>
     {
         public RemoveExamCommand(int id)
         {
