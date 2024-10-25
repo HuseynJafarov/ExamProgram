@@ -8,6 +8,11 @@ namespace Persistence.Context
         {
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=DESKTOP-OJBNPN6\\MSSQLSERVER01;initial Catalog=ExamProgram;integrated Security=true;TrustServerCertificate=true;");
+        }
+
         public DbSet<Domain.Entities.Lesson> Lessons { get; set; }
         public DbSet<Domain.Entities.Student> Students { get; set; }
         public DbSet<Domain.Entities.Exam> Exams { get; set; }

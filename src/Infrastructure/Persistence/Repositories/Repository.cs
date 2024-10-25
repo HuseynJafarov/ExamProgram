@@ -76,6 +76,5 @@ namespace Persistence.Repositories
 
             _entities.Update(entity);
         }
-
     }
 }

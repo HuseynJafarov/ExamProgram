@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Exam.Api.Controllers
 {
@@ -7,12 +6,10 @@ namespace Exam.Api.Controllers
     [ApiController]
     public class ExamController : ControllerBase
     {
-
         [HttpPost]
         public async Task<IActionResult> CreateExam()
         {
             return Ok();
         }
-
     }
 }

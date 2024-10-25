@@ -11,13 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="Features\Commands\Exam\" />
-    <Folder Include="Features\Commands\Lesson\" />
-    <Folder Include="Features\Commands\Student\" />
-    <Folder Include="Features\Queries\Exam\" />
-    <Folder Include="Features\Queries\Lesson\" />
-    <Folder Include="Features\Queries\Student\" />
+    <Folder Include="DTOs\Exam\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
   </ItemGroup>
 
 </Project>
