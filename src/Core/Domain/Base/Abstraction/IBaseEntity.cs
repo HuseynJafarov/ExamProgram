@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Base.Abstraction
+﻿namespace Domain.Base.Abstraction
 {
     public interface IBaseEntity<T>
     {
-         int Id { get; set; }
-         DateTime CreateDate { get; set; }
+        int Id { get; set; }
+        DateTime CreateDate { get; set; }
+        public bool SoftDeleted { get; set; }
     }
 }

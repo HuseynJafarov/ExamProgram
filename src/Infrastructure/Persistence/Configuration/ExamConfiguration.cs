@@ -1,11 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Configuration
 {
@@ -18,17 +13,17 @@ namespace Persistence.Configuration
                .IsRequired();
 
             builder.Property(p => p.StudentNumber)
-                .HasPrecision(5, 0) 
+                .HasPrecision(5, 0)
                 .IsRequired();
 
             builder.Property(p => p.ExamDate)
                 .HasConversion(
-                    v => v.AddHours(4), 
+                    v => v.AddHours(4),
                     v => DateTime.SpecifyKind(v, DateTimeKind.Utc))
                 .IsRequired();
 
             builder.Property(p => p.Grade)
-                .HasPrecision(1, 0) 
+                .HasPrecision(1, 0)
                 .IsRequired();
 
             builder.HasMany(e => e.Students)

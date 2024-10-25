@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-
 namespace Persistence.Configuration
 {
     public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
@@ -18,7 +17,7 @@ namespace Persistence.Configuration
                    .IsRequired();
 
             builder.Property(p => p.Class)
-                   .HasPrecision(2, 0) 
+                   .HasPrecision(2, 0)
                    .IsRequired();
 
             builder.Property(p => p.TeacherFirstName)
@@ -36,9 +35,5 @@ namespace Persistence.Configuration
             builder.HasMany(e => e.Students)
                   .WithMany(s => s.Lessons);
         }
-
-
-
-        
     }
 }
