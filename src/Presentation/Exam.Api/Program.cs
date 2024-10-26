@@ -1,12 +1,21 @@
+using Application;
 using Application.Abstractions.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Persistence;
 using Persistence.Context;
 using Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<ExamDbContext>();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<ExamDbContext>(options =>
+    options.UseSqlServer(connectionString));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddApplicationService(builder.Configuration);
+builder.Services.ServiceDescriptors();
 
 
 

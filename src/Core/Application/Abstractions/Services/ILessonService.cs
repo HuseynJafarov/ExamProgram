@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Lesson;
+using Application.Helpers.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace Application.Abstractions.Services
 {
     public interface ILessonService
     {
-        Task CreateAsync(LessonCreateAndUpdateDto lesson);
+        Task<ServiceResult> CreateAsync(LessonCreateAndUpdateDto lesson);
         Task<List<LessonListDto>> GetAllAsync();
-        Task DeleteAsync(int id);
-        Task SoftDeleteAsync(int id);
-        Task UpdateAsync(int id, LessonCreateAndUpdateDto lesson);
-        Task<List<LessonListDto>> SerachAsync(string? searchText);
+        Task<ServiceResult> DeleteAsync(int id);
+        Task<ServiceResult> SoftDeleteAsync(int id);
+        Task<ServiceResult> UpdateAsync(int id, LessonCreateAndUpdateDto lesson);
+        Task<List<LessonListDto>> SearchAsync(string? searchText);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Student;
+using Application.Helpers.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace Application.Abstractions.Services
 {
     public interface IStudentService
     {
-        Task CreateAsync(StudentCreateAndUpdateDto Student);
+        Task<ServiceResult> CreateAsync(StudentCreateAndUpdateDto Student);
         Task<List<StudentListDto>> GetAllAsync();
-        Task DeleteAsync(int id);
-        Task SoftDeleteAsync(int id);
-        Task UpdateAsync(int id, StudentCreateAndUpdateDto Student);
-        Task<List<StudentListDto>> SerachAsync(string? searchText);
+        Task<ServiceResult> DeleteAsync(int id);
+        Task<ServiceResult> SoftDeleteAsync(int id);
+        Task<ServiceResult> UpdateAsync(int id, StudentCreateAndUpdateDto Student);
+        Task<List<StudentListDto>> SearchAsync(string? searchText);
     }
 }

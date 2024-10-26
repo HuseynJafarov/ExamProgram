@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Repositories;
 using Application.Abstractions.Services;
 using Application.DTOs.Student;
+using Application.Helpers.Result;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -15,7 +16,6 @@ namespace Persistence.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IRepository<Student> _studentRepository;
 
         public StudentService(IUnitOfWork unitOfWork, IMapper mapper)
         {
@@ -23,34 +23,67 @@ namespace Persistence.Services
             _mapper = mapper;
         }
 
-        public Task CreateAsync(StudentCreateAndUpdateDto Student)
+        public async Task<ServiceResult> CreateAsync(StudentCreateAndUpdateDto student)
         {
-            throw new NotImplementedException();
+            if (student is null) return ServiceResult.Failed("student Dto Null");
+            var mappingStudent = _mapper.Map<Student>(student);
+            await _unitOfWork.Repository<Student>().Create(mappingStudent);
+            await _unitOfWork.CommitAsync();
+            return ServiceResult.Succeed("New Student Created");
         }
 
-        public Task DeleteAsync(int id)
+        public async Task<ServiceResult> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            if (id <= 0) return ServiceResult.Failed("StudentID is invalid");
+            var student = await _unitOfWork.Repository<Student>().GetById(id);
+            if (student == null) return ServiceResult.Failed("Student not found");
+            await _unitOfWork.Repository<Student>().Delete(student);
+            await _unitOfWork.CommitAsync();
+            return ServiceResult.Succeed("Student deleted successfully");
         }
 
-        public Task<List<StudentListDto>> GetAllAsync()
+        public async Task<List<StudentListDto>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var students = await _unitOfWork.Repository<Student>().GetAll();
+            return _mapper.Map<List<StudentListDto>>(students);
         }
 
-        public Task<List<StudentListDto>> SerachAsync(string? searchText)
+        public async Task<List<StudentListDto>> SearchAsync(string? searchText)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(searchText))
+            {
+                return await GetAllAsync();
+            }
+
+            var students = await _unitOfWork.Repository<Student>().GetAll();
+            var filteredStudents = students.Where(s => s.FirstName.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
+            return _mapper.Map<List<StudentListDto>>(filteredStudents);
         }
 
-        public Task SoftDeleteAsync(int id)
+        public async Task<ServiceResult> SoftDeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            if (id <= 0) return ServiceResult.Failed("StudentID is invalid");
+            var student = await _unitOfWork.Repository<Student>().GetById(id);
+            if (student == null) return ServiceResult.Failed("Student not found");
+            student.SoftDeleted = true; // Assuming there is an IsDeleted property
+            await _unitOfWork.Repository<Student>().Update(student);
+            await _unitOfWork.CommitAsync();
+            return ServiceResult.Succeed("Student soft deleted successfully");
         }
 
-        public Task UpdateAsync(int id, StudentCreateAndUpdateDto Student)
+        public async Task<ServiceResult> UpdateAsync(int id, StudentCreateAndUpdateDto student)
         {
-            throw new NotImplementedException();
+            if (id <= 0) return ServiceResult.Failed("StudentID is invalid");
+            if (student is null) return ServiceResult.Failed("Student Dto Null");
+
+            var existingStudent = await _unitOfWork.Repository<Student>().GetById(id);
+            if (existingStudent == null) return ServiceResult.Failed("Student not found");
+
+            _mapper.Map(student, existingStudent);
+            await _unitOfWork.Repository<Student>().Update(existingStudent);
+            await _unitOfWork.CommitAsync();
+
+            return ServiceResult.Succeed("Student updated successfully");
         }
     }
 }

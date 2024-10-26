@@ -17,4 +17,8 @@
     <ContainerPort Include="8081" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
