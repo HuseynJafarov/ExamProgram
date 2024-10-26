@@ -8,13 +8,9 @@ namespace Persistence.Configuration
     {
         public void Configure(EntityTypeBuilder<Exam> builder)
         {
-            builder.Property(p => p.LessonCode)
-               .HasMaxLength(3)
-               .IsRequired();
-
             builder.Property(p => p.StudentNumber)
-                .HasPrecision(5, 0)
-                .IsRequired();
+           .HasPrecision(5, 0)
+           .IsRequired();
 
             builder.Property(p => p.ExamDate)
                 .HasConversion(
@@ -27,11 +23,12 @@ namespace Persistence.Configuration
                 .IsRequired();
 
             builder.HasMany(e => e.Students)
-                    .WithMany(s => s.Exams);
+                .WithMany(s => s.Exams);
 
             builder.HasOne(e => e.Lesson)
-                      .WithOne(l => l.Exam)
-                      .HasForeignKey<Exam>(e => e.LessonCode);
+                .WithMany(l => l.Exams)
+                .HasForeignKey(e => e.LessonId)
+                .IsRequired();
         }
     }
 }

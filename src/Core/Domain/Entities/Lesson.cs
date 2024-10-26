@@ -10,6 +10,6 @@ namespace Domain.Entities
         public string TeacherFirstName { get; set; }
         public string TeacherLastName { get; set; }
         public virtual ICollection<Student> Students { get; set; }
-        public virtual Exam Exam { get; set; }
+        public virtual ICollection<Exam> Exams { get; set; }
     }
 }

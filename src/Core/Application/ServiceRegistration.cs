@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Application.Mapping;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Application
         public static void AddApplicationService(this IServiceCollection services, IConfiguration confiq)
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ServiceRegistration).Assembly));
+            services.AddAutoMapper(typeof(MappingProfile).Assembly);
         }
     }
 }

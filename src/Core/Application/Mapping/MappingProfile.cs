@@ -1,10 +1,8 @@
 ﻿using Application.DTOs.Exam;
+using Application.DTOs.Lesson;
+using Application.DTOs.Student;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain.Entities;
 
 namespace Application.Mapping
 {
@@ -12,7 +10,18 @@ namespace Application.Mapping
     {
         public MappingProfile()
         {
-             CreateMap<Domain.Entities.Exam, ExamListDTO>();
+            CreateMap<Exam, ExamListDTO>();
+
+            CreateMap<StudentCreateAndUpdateDto, Student >();
+            CreateMap<Student, StudentListDto>();
+            CreateMap<StudentCreateAndUpdateDto, Student>().ReverseMap();
+
+
+            CreateMap<LessonCreateAndUpdateDto, Lesson>();
+            CreateMap<Lesson, LessonListDto>();
+            CreateMap<LessonCreateAndUpdateDto, Lesson>().ReverseMap();
+
+
         }
     }
 }

@@ -9,31 +9,27 @@ namespace Persistence.Configuration
         public void Configure(EntityTypeBuilder<Lesson> builder)
         {
             builder.Property(p => p.LessonCode)
-                  .HasMaxLength(3)
-                  .IsRequired();
+             .HasMaxLength(3)
+             .IsRequired();
 
             builder.Property(p => p.LessonName)
-                   .HasMaxLength(30)
-                   .IsRequired();
+                .HasMaxLength(30)
+                .IsRequired();
 
             builder.Property(p => p.Class)
-                   .HasPrecision(2, 0)
-                   .IsRequired();
+                .HasPrecision(2, 0)
+                .IsRequired();
 
             builder.Property(p => p.TeacherFirstName)
-                   .HasMaxLength(20)
-                   .IsRequired();
+                .HasMaxLength(20)
+                .IsRequired();
 
             builder.Property(p => p.TeacherLastName)
-                   .HasMaxLength(20)
-                   .IsRequired();
+                .HasMaxLength(20)
+                .IsRequired();
 
-            builder.HasOne(l => l.Exam)
-                   .WithOne(e => e.Lesson)
-                   .HasForeignKey<Exam>(e => e.LessonCode);
-
-            builder.HasMany(e => e.Students)
-                  .WithMany(s => s.Lessons);
+            builder.HasMany(l => l.Students)
+                .WithMany(s => s.Lessons);
         }
     }
 }
