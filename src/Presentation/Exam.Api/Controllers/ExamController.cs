@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Exam.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class ExamController : ControllerBase
     {
@@ -19,8 +19,8 @@ namespace Exam.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateExam(CreateExamCommand command)
         {
-             var result = await _mediator.Send(command);
-             return Ok(result);
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
 
         [HttpPut]
@@ -37,12 +37,6 @@ namespace Exam.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetByIdExam(GetByIdExamQuery query)
-        {
-            var result = await _mediator.Send(query);
-            return Ok(result);
-        }
 
         [HttpGet]
         public async Task<IActionResult> GetAllExams(GetAllExamQuery query)

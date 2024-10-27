@@ -1,19 +1,19 @@
-﻿@using Exam.Admin.Models.Student
-@model List<StudentList>
+﻿@using Exam.Admin.Models.Lesson
+@model List<LessonList>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Students</title>
-    <link rel="icon" href="./img/Prosys.png" type="image/x-icon" />
+    <title>Lessons</title>
+    <link rel="icon" href="./img/Prosys.png" type="image/x-icon" /> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 <body>
     <header class="bg-light text-center p-3">
-        <h1 class="header-title">Student Management</h1>
+        <h1 class="header-title">Lesson Management</h1>
     </header>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -34,37 +34,38 @@
     </nav>
 
     <div class="container mt-4">
-        <h2 class="mb-4">Student List</h2>
-        <a href="@Url.Action("Create")" class="btn btn-primary mb-3">Add Student</a>
+        <h2 class="mb-4">Lesson List</h2>
+        <a href="@Url.Action("Create")" class="btn btn-primary mb-3">Add Lesson</a>
 
         @if (Model != null && Model.Any())
         {
-            <table class="table">
+             <table class="table">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Name</th>
-                        <th>Surname</th>
+                        <th>Lesson Code</th>
+                        <th>Lesson Name</th>
                         <th>Class</th>
-                        <th>StudentNumber</th>
+                        <th>Teacher First Name</th>
+                        <th>Teacher Last Name</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var student in Model)
+                    @foreach (var lesson in Model)
                     {
                         <tr>
-                            <td>@student.Id</td>
-                            <td>@student.FirstName</td>
-                            <td>@student.LastName</td>
-                            <td>@student.Class</td>
-                            <td>@student.StudentNumber</td>
+                            <td>@lesson.Id</td>
+                            <td>@lesson.LessonCode</td>
+                            <td>@lesson.LessonName</td>
+                            <td>@lesson.Class</td>
+                            <td>@lesson.TeacherFirstName</td>
+                            <td>@lesson.TeacherLastName</td>
                             <td>
                                 <div style="display: flex; gap:5px;">
-                                    <a href="@Url.Action("Edit", new { id = student.Id })" class="btn btn-warning">Edit</a>
-                                    <a href="#" class="btn btn-danger delete-student" data-id="@student.Id">Delete</a>
-                                    <a href="#" class="btn btn-dark soft-delete" data-id="@student.Id">Soft Delete</a>
+                                    <a href="@Url.Action("Edit", new { id = lesson.Id })" class="btn btn-warning">Edit</a>
+                                    <a href="#" class="btn btn-danger delete-lesson" data-id="@lesson.Id">Delete</a>
+                                    <a href="#" class="btn btn-dark soft-delete" data-id="@lesson.Id">Soft Delete</a>
                                 </div>
-                               
                             </td>
                         </tr>
                     }
@@ -73,7 +74,7 @@
         }
         else
         {
-            <p>No students found.</p>
+            <p>No lessons found.</p>
         }
     </div>
 
@@ -88,15 +89,14 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
-             $(document).on('click', '.delete-student', function (e) {
-            e.preventDefault(); 
-            var studentId = $(this).data('id');
+        $(document).on('click', '.delete-lesson', function (e) {
+            e.preventDefault();
+            var lessonId = $(this).data('id');
 
             Swal.fire({
                 title: 'Are you sure?',
-                text: "This action will permanently delete the student!",
+                text: "This action will permanently delete the lesson!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -105,13 +105,13 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/Student/Delete', 
+                        url: '/Lesson/Delete',
                         type: 'POST',
-                        data: { id: studentId }, 
+                        data: { id: lessonId },
                         success: function () {
                             Swal.fire(
                                 'Deleted!',
-                                'The student has been permanently deleted.',
+                                'The lesson has been permanently deleted.',
                                 'success'
                             ).then(() => {
                                 window.location.reload();
@@ -130,10 +130,11 @@
         });
 
         $(document).on('click', '.soft-delete', function (e) {
-            var studentId = $(this).data('id');
+            e.preventDefault();
+            var lessonId = $(this).data('id');
             Swal.fire({
                 title: 'Are you sure?',
-                text: "This action will soft delete the student!",
+                text: "This action will soft delete the lesson!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -142,13 +143,13 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/Student/SoftDelete', 
+                        url: '/Lesson/SoftDelete',
                         type: 'POST',
-                        data: { id: studentId }, 
+                        data: { id: lessonId },
                         success: function () {
                             Swal.fire(
                                 'Soft Deleted!',
-                                'The student has been soft deleted.',
+                                'The lesson has been soft deleted.',
                                 'success'
                             ).then(() => {
                                 window.location.reload();
@@ -166,8 +167,6 @@
             });
         });
     </script>
-
-
 
 </body>
 </html>

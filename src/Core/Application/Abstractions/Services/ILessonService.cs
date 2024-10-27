@@ -16,5 +16,6 @@ namespace Application.Abstractions.Services
         Task<ServiceResult> SoftDeleteAsync(int id);
         Task<ServiceResult> UpdateAsync(int id, LessonCreateAndUpdateDto lesson);
         Task<List<LessonListDto>> SearchAsync(string? searchText);
+        Task<LessonListDto> GetByIdAsync(int id);
     }
 }

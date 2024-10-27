@@ -26,10 +26,17 @@ namespace Persistence.Services
         public async Task<ServiceResult> CreateAsync(StudentCreateAndUpdateDto student)
         {
             if (student is null) return ServiceResult.Failed("student Dto Null");
-            var mappingStudent = _mapper.Map<Student>(student);
-            await _unitOfWork.Repository<Student>().Create(mappingStudent);
-            await _unitOfWork.CommitAsync();
-            return ServiceResult.Succeed("New Student Created");
+            try
+            {
+                var mappingStudent = _mapper.Map<Student>(student);
+                await _unitOfWork.Repository<Student>().Create(mappingStudent);
+                await _unitOfWork.CommitAsync();
+                return ServiceResult.Succeed("New Student Created");
+            }
+            catch (Exception ex)
+            {
+                return ServiceResult.Failed(ex.Message);
+            }
         }
 
         public async Task<ServiceResult> DeleteAsync(int id)
@@ -46,6 +53,12 @@ namespace Persistence.Services
         {
             var students = await _unitOfWork.Repository<Student>().GetAll();
             return _mapper.Map<List<StudentListDto>>(students);
+        }
+
+        public async Task<StudentListDto> GetByIdAsync(int id)
+        {
+            var student = await _unitOfWork.Repository<Student>().GetById(id);
+            return _mapper.Map<StudentListDto>(student);
         }
 
         public async Task<List<StudentListDto>> SearchAsync(string? searchText)
@@ -73,17 +86,24 @@ namespace Persistence.Services
 
         public async Task<ServiceResult> UpdateAsync(int id, StudentCreateAndUpdateDto student)
         {
+
             if (id <= 0) return ServiceResult.Failed("StudentID is invalid");
             if (student is null) return ServiceResult.Failed("Student Dto Null");
+            try
+            {
+                var existingStudent = await _unitOfWork.Repository<Student>().GetById(id);
+                if (existingStudent == null) return ServiceResult.Failed("Student not found");
 
-            var existingStudent = await _unitOfWork.Repository<Student>().GetById(id);
-            if (existingStudent == null) return ServiceResult.Failed("Student not found");
+                _mapper.Map(student, existingStudent);
+                await _unitOfWork.Repository<Student>().Update(existingStudent);
+                await _unitOfWork.CommitAsync();
 
-            _mapper.Map(student, existingStudent);
-            await _unitOfWork.Repository<Student>().Update(existingStudent);
-            await _unitOfWork.CommitAsync();
-
-            return ServiceResult.Succeed("Student updated successfully");
+                return ServiceResult.Succeed("Student updated successfully");
+            }
+            catch (Exception ex)
+            {
+                return ServiceResult.Failed(ex.Message);
+            }
         }
     }
 }

@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prosys Task</title>
+    <link rel="icon" href="./img/Prosys.png" type="image/x-icon" /> 
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f1f1f1;
+        }
+
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            margin: 20px 0;
+        }
+
+        .nav-link {
+            font-size: 1.5rem;
+            padding: 15px 20px;
+        }
+
+        .card {
+            margin: 20px 0;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .btn {
+            font-size: 1rem;
+            padding: 10px 20px;
+            margin: 5px;
+        }
+
+        .btn-student {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-exam {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-lesson {
+            background-color: #ffc107;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-light text-center p-3">
+        <h1 class="header-title">Welcome to the Admin Panel</h1>
+        <p>Manage Students, Exams, and Lessons</p>
+    </header>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Admin Panel</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Student")">Students</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Exam")">Exams</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Lesson")">Lessons</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                Quick Actions
+            </div>
+            <div class="card-body text-center">
+                <a href="@Url.Action("Create", "Student")" class="btn btn-student">Add Student</a>
+                <a href="@Url.Action("Create", "Exam")" class="btn btn-exam">Add Exam</a>
+                <a href="@Url.Action("Create", "Lesson")" class="btn btn-lesson">Add Lesson</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">© 2024 Admin Panel by Hüseyn Jafarov. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

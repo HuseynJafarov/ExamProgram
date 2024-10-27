@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Repositories;
 using Application.Abstractions.Services;
 using Application.DTOs.Lesson;
+using Application.DTOs.Student;
 using Application.Helpers.Result;
 using AutoMapper;
 using Domain.Entities;
@@ -61,6 +62,12 @@ namespace Persistence.Services
                 lessons = lessons.Where(l => l.LessonCode.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
             }
             return _mapper.Map<List<LessonListDto>>(lessons);
+        }
+
+        public async Task<LessonListDto> GetByIdAsync(int id)
+        {
+            var lesson = await _unitOfWork.Repository<Lesson>().GetById(id);
+            return _mapper.Map<LessonListDto>(lesson);
         }
 
         public async Task<ServiceResult> SoftDeleteAsync(int id)
