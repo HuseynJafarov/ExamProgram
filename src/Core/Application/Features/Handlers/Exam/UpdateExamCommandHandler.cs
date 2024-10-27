@@ -16,20 +16,28 @@ namespace Application.Features.Handlers.Exam
 
         public async Task<ServiceResult> Handle(UpdateExamCommand request, CancellationToken cancellationToken)
         {
-            var exam = await _unitOfWork.Repository<Domain.Entities.Exam>().GetById(request.ExamId);
+            try
+            {
+                var exam = await _unitOfWork.Repository<Domain.Entities.Exam>().GetById(request.ExamId);
 
-            if (exam == null)
-                return ServiceResult.Failed("Exam not found.");
+                if (exam == null)
+                    return ServiceResult.Failed("Exam not found.");
 
-            exam.LessonCode = request.LessonCode;
-            exam.StudentNumber = request.StudentNumber;
-            exam.ExamDate = request.ExamDate;
-            exam.Grade = request.Grade;
+                exam.LessonCode = request.LessonCode;
+                exam.StudentNumber = request.StudentNumber;
+                exam.ExamDate = request.ExamDate;
+                exam.Grade = request.Grade;
 
-            await _unitOfWork.Repository<Domain.Entities.Exam>().Update(exam);
-            await _unitOfWork.CommitAsync();
+                await _unitOfWork.Repository<Domain.Entities.Exam>().Update(exam);
+                await _unitOfWork.CommitAsync();
 
-            return ServiceResult.Succeed("Exam updated successfully.");
+                return ServiceResult.Succeed("Exam updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return ServiceResult.Failed($"An error occurred while creating the exam: {ex.Message}");
+            }
+
         }
     }
 }

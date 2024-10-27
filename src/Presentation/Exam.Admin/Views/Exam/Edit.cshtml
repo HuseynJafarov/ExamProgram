@@ -1,18 +1,18 @@
-﻿@using Exam.Admin.Models.Lesson
-@model LessonList
+﻿@using Exam.Admin.Models.Exam
+@model ExamList
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Lesson</title>
+    <title>Edit Exam</title>
     <link rel="icon" href="./img/Prosys.png" type="image/x-icon" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 </head>
 <body>
     <header class="bg-light text-center p-3">
-        <h1 class="header-title">Edit Lesson</h1>
+        <h1 class="header-title">Edit Exam</h1>
     </header>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -38,26 +38,28 @@
 
             <div class="form-group">
                 <label for="LessonCode">Lesson Code</label>
-                <input type="text" maxlength="3" class="form-control" id="LessonCode" name="LessonCode" value="@Model.LessonCode" required />
+                <input type="text" class="form-control" id="LessonCode" name="LessonCode" maxlength="3" required />
+                <div class="invalid-feedback">Exam code is required and must be at most 3 characters long.</div>
             </div>
             <div class="form-group">
-                <label for="LessonName">Lesson Name</label>
-                <input type="text" maxlength="30" class="form-control" id="LessonName" name="LessonName" value="@Model.LessonName" required />
+                <label for="LessonId">Lesson Id</label>
+                <input type="text" class="form-control" id="LessonId" name="LessonId" maxlength="3" required />
+                <div class="invalid-feedback">Exam Id is required and must be at most 3 characters long.</div>
             </div>
             <div class="form-group">
-                <label for="Class">Class</label>
-                <input type="number" step="0.01" class="form-control" id="Class" name="Class" value="@Model.Class" required />
+                <label for="StudentNumber">Student Number</label>
+                <input type="number" class="form-control" id="StudentNumber" name="StudentNumber" value="@Model.StudentNumber" required />
             </div>
             <div class="form-group">
-                <label for="TeacherFirstName">Teacher First Name</label>
-                <input type="text" maxlength="20" class="form-control" id="TeacherFirstName" name="TeacherFirstName" value="@Model.TeacherFirstName" required />
+                <label for="ExamDate">Exam Date</label>
+                <input type="date" class="form-control" id="ExamDate" name="ExamDate" value="@Model.ExamDate.ToString("yyyy-MM-dd")" required />
             </div>
             <div class="form-group">
-                <label for="TeacherLastName">Teacher Last Name</label>
-                <input type="text" maxlength="20" class="form-control" id="TeacherLastName" name="TeacherLastName" value="@Model.TeacherLastName" required />
+                <label for="Grade">Grade</label>
+                <input type="number" step="0.01" class="form-control" id="Grade" name="Grade" value="@Model.Grade" required />
             </div>
 
-            <button type="submit" class="btn btn-primary">Update Lesson</button>
+            <button type="submit" class="btn btn-primary">Update Exam</button>
             <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
@@ -71,15 +73,5 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-    document.getElementById('Class').addEventListener('input', function() {
-        if (this.value < 1 || this.value > 9) {
-            this.setCustomValidity('Please enter a number between 1 and 9.');
-        } else {
-            this.setCustomValidity('');
-        }
-    });
-</script>
-
 </body>
 </html>

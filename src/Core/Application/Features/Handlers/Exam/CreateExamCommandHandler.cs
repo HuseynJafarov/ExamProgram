@@ -18,19 +18,29 @@ namespace Application.Features.Handlers.Exam
 
         public async Task<ServiceResult> Handle(CreateExamCommand request, CancellationToken cancellationToken)
         {
-            var exam = new Domain.Entities.Exam
+            try
             {
-                CreateDate = DateTime.UtcNow.AddHours(4),
-                LessonCode = request.LessonCode,
-                StudentNumber = request.StudentNumber,
-                ExamDate = request.ExamDate,
-                Grade = request.Grade
-            };
+                var exam = new Domain.Entities.Exam
+                {
+                    CreateDate = DateTime.UtcNow.AddHours(4),
+                    LessonCode = request.LessonCode,
+                    StudentNumber = request.StudentNumber,
+                    ExamDate = request.ExamDate,
+                    Grade = request.Grade,
+                    LessonId = request.LessonId,
+                };
 
-            await _unitOfWork.Repository<Domain.Entities.Exam>().Create(exam);
-            await _unitOfWork.CommitAsync();
+                await _unitOfWork.Repository<Domain.Entities.Exam>().Create(exam);
+                await _unitOfWork.CommitAsync();
 
-            return ServiceResult.Succeed("Exam created successfully.");
+                return ServiceResult.Succeed("Exam created successfully.");
+            }
+            catch (Exception ex)
+            {
+                return ServiceResult.Failed($"An error occurred while creating the exam: {ex.Message}");
+            }
+
+
 
         }
     }

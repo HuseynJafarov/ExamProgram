@@ -5,22 +5,32 @@ using Persistence.Services;
 
 namespace Exam.Api.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class LessonController : ControllerBase
     {
         private readonly ILessonService _lessonService;
+        private readonly ILogger<LessonController> _logger;
 
-        public LessonController(ILessonService lessonService)
+        public LessonController(ILessonService lessonService, ILogger<LessonController> logger)
         {
             _lessonService = lessonService;
+            _logger = logger;
         }
 
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllLessons()
         {
-            var result = await _lessonService.GetAllAsync();
-            return Ok(result);
+            try
+            {
+                var result = await _lessonService.GetAllAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while fetching Lesson.");
+                return StatusCode(500, "Internal server error.");
+            }
         }
 
         [HttpPost("Create")]

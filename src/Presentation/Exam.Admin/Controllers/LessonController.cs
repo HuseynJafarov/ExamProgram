@@ -74,7 +74,7 @@ namespace Exam.Admin.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var lessonJson = await response.Content.ReadAsStringAsync();
-                var lesson = JsonConvert.DeserializeObject<StudentList>(lessonJson);
+                var lesson = JsonConvert.DeserializeObject<LessonList>(lessonJson);
 
                 return View(lesson);
             }

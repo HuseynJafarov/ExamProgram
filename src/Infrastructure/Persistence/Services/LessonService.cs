@@ -26,12 +26,17 @@ namespace Persistence.Services
         public async Task<ServiceResult> CreateAsync(LessonCreateAndUpdateDto lesson)
         {
             if (lesson == null) return ServiceResult.Failed("Lesson DTO is null.");
-            var lessonEntity = _mapper.Map<Lesson>(lesson);
-
-            await _unitOfWork.Repository<Lesson>().Create(lessonEntity);
-            await _unitOfWork.CommitAsync();
-
-            return ServiceResult.Succeed("Lesson created successfully.");
+            try
+            {
+                var lessonEntity = _mapper.Map<Lesson>(lesson);
+                await _unitOfWork.Repository<Lesson>().Create(lessonEntity);
+                await _unitOfWork.CommitAsync();
+                return ServiceResult.Succeed("Lesson created successfully.");
+            }
+            catch (Exception ex)
+            {
+                return ServiceResult.Failed(ex.Message);
+            }
         }
 
 

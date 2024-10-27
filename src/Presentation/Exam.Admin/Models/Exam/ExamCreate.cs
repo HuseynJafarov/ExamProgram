@@ -1,9 +1,6 @@
-﻿using Application.Helpers.Result;
-using MediatR;
-
-namespace Application.Features.Commands.Exam
+﻿namespace Exam.Admin.Models.Exam
 {
-    public record CreateExamCommand : IRequest<ServiceResult>
+    public class ExamCreate
     {
         public string LessonCode { get; set; }
         public decimal StudentNumber { get; set; }
