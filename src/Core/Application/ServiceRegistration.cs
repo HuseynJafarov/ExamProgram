@@ -8,17 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application
+namespace Application;
+
+public static class ServiceRegistration
 {
-    public static class ServiceRegistration
+    public static void AddApplicationService(this IServiceCollection services, IConfiguration confiq)
     {
-        public static void AddApplicationService(this IServiceCollection services, IConfiguration confiq)
-        {
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ServiceRegistration).Assembly));
-            services.AddAutoMapper(typeof(MappingProfile).Assembly);
-        }
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ServiceRegistration).Assembly));
+        services.AddAutoMapper(typeof(MappingProfile).Assembly);
     }
-
-
-
 }
